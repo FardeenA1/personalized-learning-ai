@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — StyleNotes AI</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+  <nav class="nav">
+    <a href="index.html" class="logo">
+      <span class="logo-mark"></span>
+      StyleNotes AI
+    </a>
+    <div class="nav-links">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="#" onclick="logout(); return false;">Log out</a>
+    </div>
+  </nav>
+</div>
+
+<div class="container" style="padding: 20px 32px 100px;">
+  <span class="eyebrow">admin</span>
+  <h1 style="font-size: 2rem; margin-top: 8px; margin-bottom: 8px;">User management</h1>
+  <p class="text-soft" id="userCountLabel" style="margin-bottom: 28px;"></p>
+
+  <div id="errorBox" class="error-box hidden"></div>
+
+  <div id="adminTableWrap"></div>
+</div>
+
+<script src="auth.js"></script>
+<script src="app.js"></script>
+<script>
+  requireAuth();
+  requireAdmin();
+</script>
+</body>
+</html>

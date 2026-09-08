@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create account — StyleNotes AI</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="ruled-bg" style="min-height: 100vh;">
+
+<div class="container">
+  <nav class="nav">
+    <a href="index.html" class="logo">
+      <span class="logo-mark"></span>
+      StyleNotes AI
+    </a>
+  </nav>
+</div>
+
+<div style="max-width: 420px; margin: 40px auto; padding: 0 20px;">
+  <div class="card">
+    <span class="eyebrow">step 1 of 2</span>
+    <h1 style="font-size: 1.7rem; margin-top: 8px;">Create your account</h1>
+    <p class="text-soft" style="font-size: 0.92rem; margin-top: 6px; margin-bottom: 24px;">
+      Next you'll upload sample notes to build your Style DNA.
+    </p>
+
+    <div id="errorBox" class="error-box hidden"></div>
+
+    <form onsubmit="handleRegister(event)">
+      <div class="field">
+        <label for="fullName">Full name</label>
+        <input type="text" id="fullName" required placeholder="Aisha Khan">
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" required placeholder="you@college.edu">
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" required minlength="6" placeholder="At least 6 characters">
+      </div>
+      <button type="submit" id="submitBtn" class="btn btn-accent btn-block">Create account →</button>
+    </form>
+
+    <p class="text-soft" style="text-align: center; margin-top: 18px; font-size: 0.9rem;">
+      Already have an account? <a href="login.html" style="color: var(--ink); font-weight: 600;">Log in</a>
+    </p>
+  </div>
+</div>
+
+<script src="auth.js"></script>
+</body>
+</html>

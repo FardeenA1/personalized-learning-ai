@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — StyleNotes AI</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <nav class="nav">
+    <a href="index.html" class="logo">
+      <span class="logo-mark"></span>
+      StyleNotes AI
+    </a>
+    <div class="nav-links">
+      <a href="admin.html" id="adminLink" class="hidden">Admin</a>
+      <a href="#" onclick="logout(); return false;">Log out</a>
+    </div>
+  </nav>
+</div>
+
+<div class="container" style="padding: 20px 32px 100px;">
+  <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 32px;">
+    <div>
+      <span class="eyebrow">your subjects</span>
+      <h1 style="font-size: 2rem; margin-top: 8px;">Style profiles</h1>
+    </div>
+    <button class="btn btn-accent" onclick="toggleUploadCard()">+ New subject</button>
+  </div>
+
+  <div id="uploadCard" class="card hidden" style="margin-bottom: 32px;">
+    <h3 style="font-size: 1.15rem;">Teach StyleNotes AI a new subject</h3>
+    <p class="text-soft" style="font-size: 0.9rem; margin-top: 6px; margin-bottom: 20px;">
+      Upload 10–20 pages of your own notes for one subject. Files are analyzed and deleted immediately — only your Style DNA is kept.
+    </p>
+
+    <div id="errorBox" class="error-box hidden"></div>
+
+    <form id="uploadForm" onsubmit="handleUpload(event)">
+      <div class="field">
+        <label for="subject">Subject name</label>
+        <input type="text" id="subject" required placeholder="e.g. Physics, Software Testing">
+      </div>
+      <div class="field">
+        <label for="files">Sample notes (PDF, DOCX, TXT, or images)</label>
+        <input type="file" id="files" multiple accept=".pdf,.docx,.txt,.jpg,.jpeg,.png" required>
+      </div>
+      <button type="submit" id="uploadBtn" class="btn btn-accent">Analyze my style →</button>
+    </form>
+  </div>
+
+  <div id="profileList"></div>
+
+  <div id="emptyState" class="card center hidden" style="padding: 56px 28px;">
+    <p style="font-size: 1.05rem;">No subjects yet.</p>
+    <p class="text-soft" style="font-size: 0.9rem; margin-top: 6px;">Add your first subject to build your Style DNA.</p>
+  </div>
+</div>
+
+<script src="auth.js"></script>
+<script src="app.js"></script>
+<script>
+  requireAuth();
+  loadStyleProfiles();
+  showAdminLinkIfAdmin();
+</script>
+</body>
+</html>

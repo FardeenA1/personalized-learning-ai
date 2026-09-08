@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generate notes — StyleNotes AI</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+  <nav class="nav">
+    <a href="index.html" class="logo">
+      <span class="logo-mark"></span>
+      StyleNotes AI
+    </a>
+    <div class="nav-links">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="#" onclick="logout(); return false;">Log out</a>
+    </div>
+  </nav>
+</div>
+
+<div class="container" style="padding: 20px 32px 100px;">
+  <span class="eyebrow">generate</span>
+  <h1 style="font-size: 2rem; margin-top: 8px; margin-bottom: 24px;">Rewrite a topic in your style</h1>
+
+  <div id="errorBox" class="error-box hidden"></div>
+
+  <div class="generate-grid">
+
+    <!-- LEFT: FORM -->
+    <div class="card generate-form-col">
+      <form id="generateForm" onsubmit="handleGenerate(event)">
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div class="field">
+            <label for="genSubject">Subject</label>
+            <input type="text" id="genSubject" required placeholder="e.g. Physics">
+          </div>
+          <div class="field">
+            <label for="genMode">Mode</label>
+            <select id="genMode">
+              <option value="my_style">My style</option>
+              <option value="exam_board">Exam prep</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="genTopic">Topic</label>
+          <input type="text" id="genTopic" required placeholder="e.g. Newton's Laws of Motion">
+        </div>
+
+        <div class="field">
+          <label for="genContent">Description or textbook text</label>
+          <textarea id="genContent" placeholder="Paste a paragraph, definition, or textbook excerpt on this topic..."></textarea>
+        </div>
+
+        <div class="field">
+          <label for="genFile">— or upload a photo / document of the topic instead</label>
+          <input type="file" id="genFile" accept=".pdf,.docx,.txt,.jpg,.jpeg,.png">
+        </div>
+
+        <button type="submit" id="generateBtn" class="btn btn-accent btn-block">Generate my notes →</button>
+      </form>
+    </div>
+
+    <!-- RIGHT: OUTPUT -->
+    <div class="generate-output-col">
+      <div id="outputPlaceholder" class="card center" style="padding: 56px 28px;">
+        <p class="text-soft" style="font-size: 0.95rem;">Your personalized notes will appear here.</p>
+      </div>
+
+      <div id="outputCard" class="card hidden">
+        <span class="tag" id="outputSubject"></span>
+        <h3 style="font-size: 1.3rem; margin-top: 12px;" id="outputTopic"></h3>
+
+        <div style="display:flex; align-items:center; gap:24px; margin-top:16px; padding:16px 20px; background: rgba(76,107,88,0.05); border-radius: 12px; flex-wrap: wrap;">
+          <div id="styleChartWrap" style="flex-shrink:0;"></div>
+          <div>
+            <span class="eyebrow">your style fingerprint</span>
+            <div style="font-weight:600; font-size:1rem; margin-top:6px;">Style Match Score</div>
+            <div class="text-soft mono" style="font-size:0.78rem; margin-top:4px;" id="matchBreakdown"></div>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:10px; margin-top:20px; border-bottom: 1px solid var(--rule);">
+          <button type="button" class="tab-btn active" id="styledTabBtn" onclick="showTab('styled')">Your Style</button>
+          <button type="button" class="tab-btn" id="rawTabBtn" onclick="showTab('raw')">Plain AI (no style)</button>
+        </div>
+
+        <p class="output-text" style="margin-top: 18px;" id="outputText"></p>
+        <p class="output-text hidden" style="margin-top: 18px;" id="rawOutputText"></p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="auth.js"></script>
+<script src="app.js"></script>
+<script>
+  requireAuth();
+  prefillSubjectFromUrl();
+</script>
+</body>
+</html>
