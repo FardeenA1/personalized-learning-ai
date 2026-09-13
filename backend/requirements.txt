@@ -12,4 +12,6 @@ pytesseract
 python-docx
 pillow
 google-genai
+spacy
 python-dotenv
+bcrypt==4.0.1
