@@ -10,20 +10,29 @@ from PIL import Image
 
 from docx import Document
 
+import boto3
 
+
+def extract_text_with_textract(file_path):
+    client = boto3.client("textract", region_name="us-east-1")
+
+    with open(file_path, "rb") as document:
+        image_bytes = document.read()
+
+    response = client.detect_document_text(
+        Document={"Bytes": image_bytes}
+    )
+
+    lines = [
+        block["Text"]
+        for block in response["Blocks"]
+        if block["BlockType"] == "LINE"
+    ]
+
+    return "\n".join(lines)
 # ============================================================
 # 1. TESSERACT AND POPPLER PATHS
 # ============================================================
-
-pytesseract.pytesseract.tesseract_cmd = (
-    r"C:\Program Files\Tesseract-OCR\tesseract.exe"
-)
-
-POPPLER_PATH = (
-    r"C:\Users\NADEEM ANSARI\Desktop\resume"
-    r"\poppler-26.02.0\Library\bin"
-)
-
 
 # ============================================================
 # 2. CLEAN TEXT
@@ -121,15 +130,31 @@ def extract_text_from_normal_pdf(
 def extract_text_from_scanned_pdf(
     file_path
 ):
+    try:
+        print("Trying Textract for handwriting/scanned text...")
+        text = extract_text_with_textract(file_path)
 
-    print(
-        "Converting PDF pages to images..."
-    )
+        if len(text.strip()) > 20:
+            return (text, 1)
 
-    images = convert_from_path(
-        file_path,
-        poppler_path=POPPLER_PATH
-    )
+    except Exception as e:
+        print(f"Textract failed, falling back to Tesseract OCR: {e}")
+
+    print("Converting PDF pages to images...")
+
+    images = convert_from_path(file_path)
+
+    all_text = []
+    page_count = len(images)
+
+    for page_number, image in enumerate(images):
+        print(f"Processing page {page_number + 1} of {page_count}")
+        page_text = pytesseract.image_to_string(image, config="--psm 4")
+        all_text.append(page_text)
+
+    full_text = "\n\n".join(all_text)
+
+    return (full_text, page_count)
 
     all_text = []
 
