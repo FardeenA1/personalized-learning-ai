@@ -4,6 +4,7 @@ sqlalchemy
 pydantic
 python-jose[cryptography]
 passlib[bcrypt]
+bcrypt==4.0.1
 python-multipart
 email-validator
 pymupdf
@@ -14,5 +15,4 @@ pillow
 google-genai
 spacy
 python-dotenv
-bcrypt==4.0.1
 boto3
